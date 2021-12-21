@@ -1,24 +1,12 @@
 <script>
-    import { onMount } from "svelte";
-    export let beers;
+    import { onMount } from 'svelte'
+    let beer
     onMount(async () => {
-        await fetch(`http://localhost:5000/beer`)
-            .then((r) => r.json())
-            .then((data) => {
-                console.log(data);
-                beers = data;
-            });
-    });
+        const beerResponse = await fetch(
+            `http://localhost:3000/beer/594111ecffe15a2652471936`
+        )
+        beer = await beerResponse.json()
+    })
 </script>
 
-{#if beers}
-    <ul>
-        {#each beers as beer}
-            <li>
-                <a href="/beer/{beer._id}">
-                    {beer.name}
-                </a>
-            </li>
-        {/each}
-    </ul>
-{/if}
+<p>{beer && beer.name}</p>
